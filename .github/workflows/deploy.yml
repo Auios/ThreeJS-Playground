@@ -58,5 +58,5 @@ jobs:
         script: |
           cd /apps/3d/
           export GITHUB_SHA=${{ github.sha }}
-          node .
+          node . > /apps/3d/output.log 2>&1 &
       continue-on-error: false
