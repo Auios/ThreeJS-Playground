@@ -1,0 +1,16 @@
+<div id="scene-container"></div>
+<script type="importmap">
+    {
+      "imports": {
+        "three": "/js/three.module.js"
+      }
+    }
+  </script>
+<script type="module" src="/js/game/main.js"></script>
+<script>
+  window.addEventListener('resize', onResize);
+
+  function onResize() {
+    console.log('You resized the browser window!');
+  }
+</script>

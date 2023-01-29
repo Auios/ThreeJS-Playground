@@ -1,0 +1,62 @@
+name: Deploy ThreeJS Playground
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+
+    - name: Stop Application
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.PROD_SSH_HOST }}
+        username: ${{ secrets.PROD_SSH_USER }}
+        port: ${{ secrets.PROD_SSH_PORT }}
+        key: ${{ secrets.PROD_SSH_KEY }}
+        script: kill $(ps -aux | grep "localhost:28106" | awk '{print $2}')
+      continue-on-error: true
+
+    - name: Deploy application
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.PROD_SSH_HOST }}
+        username: ${{ secrets.PROD_SSH_USER }}
+        port: ${{ secrets.PROD_SSH_PORT }}
+        key: ${{ secrets.PROD_SSH_KEY }}
+        source: "3d/*"
+        target: "/apps/3d"
+        rm: true
+        strip_components: 1
+      continue-on-error: false
+
+    - name: Install Packages
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.PROD_SSH_HOST }}
+        username: ${{ secrets.PROD_SSH_USER }}
+        port: ${{ secrets.PROD_SSH_PORT }}
+        key: ${{ secrets.PROD_SSH_KEY }}
+        script: |
+          cd /apps/3d/
+          npm install
+      continue-on-error: false
+
+    - name: Start Application
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.PROD_SSH_HOST }}
+        username: ${{ secrets.PROD_SSH_USER }}
+        port: ${{ secrets.PROD_SSH_PORT }}
+        key: ${{ secrets.PROD_SSH_KEY }}
+        script: |
+          cd /apps/3d/
+          export GITHUB_SHA=${{ github.sha }}
+          node .
+      continue-on-error: false
