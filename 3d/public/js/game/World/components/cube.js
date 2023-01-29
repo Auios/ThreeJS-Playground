@@ -1,6 +1,28 @@
-import { BoxGeometry, Mesh, MeshStandardMaterial, MathUtils } from 'three';
+import {
+  BoxGeometry,
+  Mesh,
+  MeshStandardMaterial,
+  MathUtils,
+  TextureLoader
+} from 'three';
 
 let rotationOffset = 0;
+
+/**
+ * @returns {MeshStandardMaterial}
+ */
+function createMaterial() {
+  // create a texture loader.
+  const textureLoader = new TextureLoader();
+
+  // load a texture
+  const texture = textureLoader.load('/assets/textures/uv-test-bw.png');
+
+  // create a "standard" material
+  const material = new MeshStandardMaterial({ color: 'salmon' });
+
+  return material;
+  }
 
 /**
  * @param {number} x
@@ -11,9 +33,7 @@ let rotationOffset = 0;
 function createCube(x = 0, y = 0, z = 0) {
   const geometry = new BoxGeometry(1, 1, 1);
 
-  // Switch the old "basic" material to
-  // a physically correct "standard" material
-  const material = new MeshStandardMaterial({ color: 'salmon' });
+  const material = createMaterial();
 
   const cube = new Mesh(geometry, material);
 
