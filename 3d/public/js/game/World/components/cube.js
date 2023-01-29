@@ -19,10 +19,14 @@ function createMaterial() {
   const texture = textureLoader.load('/assets/textures/uv-test-bw.png');
 
   // create a "standard" material
-  const material = new MeshStandardMaterial({ color: 'salmon' });
+  // const material = new MeshStandardMaterial({ color: 'salmon' });
+  const material = new MeshStandardMaterial({
+    color: "lightgreen",
+    map: texture,
+  });
 
   return material;
-  }
+}
 
 /**
  * @param {number} x
