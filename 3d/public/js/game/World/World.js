@@ -33,17 +33,21 @@ class World {
 
     scene.add(light);
 
-    const count = 20;
-    const distance = 20;
-    const spacing = 1;
+    let cube = createCube(0, 0, 10);
+    scene.add(cube);
+    loop.updatables.push(cube);
 
-    for(let y = -count; y <= count; y++) {
-      for(let x = -count; x <= count; x++) {
-        const cube = createCube(x * spacing, y * spacing, distance);
-        scene.add(cube);
-        loop.updatables.push(cube);
-      }
-    }
+    // const count = 20;
+    // const distance = 20;
+    // const spacing = 1;
+
+    // for(let y = -count; y <= count; y++) {
+    //   for(let x = -count; x <= count; x++) {
+    //     const cube = createCube(x * spacing, y * spacing, distance);
+    //     scene.add(cube);
+    //     loop.updatables.push(cube);
+    //   }
+    // }
 
     const resizer = new Resizer(container, camera, renderer);
     resizer.onResize = () => {

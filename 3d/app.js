@@ -19,12 +19,10 @@ app.get('/', function(req, res) {
   res.render('index', { title: '3D' });
 });
 
-
-
 app.get('/about', function(req, res) {
   res.render('about', { title: 'About' });
 });
 
 app.listen(port, () => {
-	console.log(`http://localhost:${port}`);
+  console.log(`http://localhost:${port}`);
 });
