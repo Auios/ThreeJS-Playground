@@ -3,7 +3,7 @@ import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 
 import { createCamera } from './components/camera.js';
 import { createCube } from './components/cube.js';
-import { createLight } from './components/light.js';
+import { createLights } from './components/light.js';
 import { createScene } from './components/scene.js';
 
 import { createRenderer } from './systems/renderer.js';
@@ -34,26 +34,16 @@ class World {
 
     const controls = createControls(camera, renderer.domElement);
 
-    const light = createLight();
+    const { ambientLight, mainLight } = createLights();
     const cube = createCube(0, 0, 10);
 
-    scene.add(light);
+    scene.add(ambientLight);
+    scene.add(mainLight);
+
     scene.add(cube);
 
     loop.updatables.push(cube);
     loop.updatables.push(controls);
-
-    // const count = 20;
-    // const distance = 20;
-    // const spacing = 1;
-
-    // for(let y = -count; y <= count; y++) {
-    //   for(let x = -count; x <= count; x++) {
-    //     const cube = createCube(x * spacing, y * spacing, distance);
-    //     scene.add(cube);
-    //     loop.updatables.push(cube);
-    //   }
-    // }
 
     const resizer = new Resizer(container, camera, renderer);
     resizer.onResize = () => {

@@ -21,7 +21,7 @@ function createMaterial() {
   // create a "standard" material
   // const material = new MeshStandardMaterial({ color: 'salmon' });
   const material = new MeshStandardMaterial({
-    color: "lightgreen",
+    color: "white",
     map: texture,
   });
 
